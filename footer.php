@@ -25,6 +25,9 @@
 				printf( esc_html__( 'Theme: %1$s by %2$s.', 'school-theme' ), 'school-theme', '<a href="https://itsgill.com">Gillian Downey & Ian D\'souza</a>' );
 				?>
 		</div><!-- .site-info -->
+		<nav id="footer-navigation" class="footer-navigation">
+			<?php wp_nav_menu( array( 'theme_location' => 'footer-right') ); ?>
+		</nav>
 	</footer><!-- #colophon -->
 </div><!-- #page -->
 

@@ -49,7 +49,8 @@ function school_theme_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'school-theme' ),
+			'header' => esc_html__( 'Header Menu', 'school-theme' ),
+			'footer-right' => esc_html__( 'Footer Menu - Right Side', 'school-theme' ),
 		)
 	);
 
@@ -110,7 +111,7 @@ add_action( 'after_setup_theme', 'school_theme_setup' );
  * @global int $content_width
  */
 function school_theme_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'school_theme_content_width', 640 );
+	$GLOBALS['content_width'] = apply_filters( 'school_theme_content_width', 960 );
 }
 add_action( 'after_setup_theme', 'school_theme_content_width', 0 );
 
@@ -124,6 +125,17 @@ function school_theme_widgets_init() {
 		array(
 			'name'          => esc_html__( 'Sidebar', 'school-theme' ),
 			'id'            => 'sidebar-1',
+			'description'   => esc_html__( 'Add widgets here.', 'school-theme' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Page Sidebar', 'school-theme' ),
+			'id'            => 'sidebar-2',
 			'description'   => esc_html__( 'Add widgets here.', 'school-theme' ),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
@@ -148,6 +160,18 @@ function school_theme_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'school_theme_scripts' );
+
+/**
+ * Enqueue AOS.
+ */
+
+function enqueue_aos_scripts() {
+	if (is_single('post')) {
+		wp_enqueue_style( 'aos-css', get_stylesheet_directory_uri().'/aos.css' );
+    	wp_enqueue_script( 'aos-js', get_stylesheet_directory_uri(). '/aos.js', array(), null, true );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'enqueue_aos_scripts' );
 
 /**
  * Implement the Custom Header feature.
