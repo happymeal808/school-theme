@@ -150,16 +150,19 @@ add_action( 'widgets_init', 'school_theme_widgets_init' );
  * Enqueue scripts and styles.
  */
 function school_theme_scripts() {
-	wp_enqueue_style( 'school-theme-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'school-theme-style', 'rtl', 'replace' );
+    // Enqueue the compiled CSS file
+    wp_enqueue_style('school-theme-style', get_template_directory_uri() . '/style.css', array(), _S_VERSION);
+    wp_style_add_data('school-theme-style', 'rtl', 'replace');
 
-	wp_enqueue_script( 'school-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+    // Enqueue navigation script
+    wp_enqueue_script('school-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
+    // Enqueue comment-reply script if needed
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
 }
-add_action( 'wp_enqueue_scripts', 'school_theme_scripts' );
+add_action('wp_enqueue_scripts', 'school_theme_scripts');
 
 /**
  * Enqueue AOS.
