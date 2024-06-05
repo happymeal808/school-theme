@@ -32,12 +32,52 @@ function school_theme_register_custom_post_types() {
         'has_archive'        => false,
         'hierarchical'       => false,
         'menu_position'      => 7,
+        'menu_icon'          => 'dashicons-archive',
         'supports'           => array( 'title', 'editor' ),
         'template'           => array( array( 'core/pullquote' ) ),
         'template_lock'      => 'all'
     );
     
     register_post_type( 'school-theme-staff', $args );
+
+        // register staff
+        $labels = array(
+            'name'               => _x( 'Schedule', 'post type general name'  ),
+            'singular_name'      => _x( 'Schedule', 'post type singular name'  ),
+            'menu_name'          => _x( 'Schedule', 'admin menu'  ),
+            'name_admin_bar'     => _x( 'Schedule', 'add new on admin bar' ),
+            'add_new'            => _x( 'Add New', 'Schedule' ),
+            'add_new_item'       => __( 'Add New Schedule' ),
+            'new_item'           => __( 'New Schedule' ),
+            'edit_item'          => __( 'Edit Schedule' ),
+            'view_item'          => __( 'View Schedule'  ),
+            'all_items'          => __( 'All Schedule' ),
+            'search_items'       => __( 'Search Schedule' ),
+            'parent_item_colon'  => __( 'Parent Schedule:' ),
+            'not_found'          => __( 'No schedule found.' ),
+            'not_found_in_trash' => __( 'No schedule found in Trash.' ),
+        );
+        
+        $args = array(
+            'labels'             => $labels,
+            'public'             => true,
+            'publicly_queryable' => true,
+            'show_ui'            => true,
+            'show_in_menu'       => true,
+            'show_in_rest'       => true,
+            'query_var'          => true,
+            'rewrite'            => array( 'slug' => 'schedule' ),
+            'capability_type'    => 'post',
+            'has_archive'        => false,
+            'hierarchical'       => false,
+            'menu_position'      => 7,
+            'menu_icon'          => 'dashicons-archive',
+            'supports'           => array( 'title', 'editor' ),
+            'template'           => array( array( 'core/pullquote' ) ),
+            'template_lock'      => 'all'
+        );
+        
+        register_post_type( 'school-theme-schedule', $args );
 }
 
 add_action( 'init', 'school_theme_register_custom_post_types' );
