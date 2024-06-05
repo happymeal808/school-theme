@@ -205,3 +205,15 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+// remove Block editor from pages/posts
+function school_theme_post_filter( $use_block_editor, $post ) {
+    // Add IDs to the array
+    $page_ids = array( 54 );
+    if ( in_array( $post->ID, $page_ids ) ) {
+        return false;
+    } else {
+        return $use_block_editor;
+    }
+}
+
+add_filter( 'use_block_editor_for_post', 'school_theme_post_filter', 10, 2 );

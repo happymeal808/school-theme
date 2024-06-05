@@ -71,7 +71,7 @@ function school_theme_register_custom_post_types() {
             'has_archive'        => false,
             'hierarchical'       => false,
             'menu_position'      => 7,
-            'menu_icon'          => 'dashicons-archive',
+            'menu_icon'          => 'dashicons-clock',
             'supports'           => array( 'title', 'editor' ),
             'template'           => array( array( 'core/pullquote' ) ),
             'template_lock'      => 'all'
