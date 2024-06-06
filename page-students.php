@@ -14,34 +14,31 @@
 
  get_header(); 
 
- // Custom excerpt length for this template
+ // capped excerpt length for this template
  function custom_student_excerpt_length( $length ) {
      return 25;
  }
  add_filter( 'excerpt_length', 'custom_student_excerpt_length', 999 );
  
- // Custom excerpt more link for this template
  function custom_student_excerpt_more( $more ) {
      global $post;
      return '... <a class="read-more" href="' . get_permalink($post->ID) . '">' . __('Read More about the Student', 'school-theme') . '</a>';
  }
  add_filter( 'excerpt_more', 'custom_student_excerpt_more' );
  
- echo "This is the Students Page template."; // Debugging line
  ?>
  
  <main id="primary" class="site-main">
  
      <header class="page-header">
          <h1 class="page-title"><?php the_title(); ?></h1>
-     </header><!-- .page-header -->
+     </header>
  
      <div class="students-list">
          <?php
-         // WP_Query arguments to fetch all student posts
          $args = array(
-             'post_type'      => 'student', // Custom post type
-             'posts_per_page' => -1, // Fetch all student posts
+             'post_type'      => 'student',
+             'posts_per_page' => -1,
              'orderby'        => 'title',
              'order'          => 'ASC',
          );
@@ -74,7 +71,7 @@
                      </div>
                      <div class="student-terms">
                          <?php if ( $terms_list ) : ?>
-                             <p><?php echo $terms_list; ?></p>
+                             <p>Specialty: <?php echo $terms_list; ?></p>
                          <?php endif; ?>
                      </div>
                  </div>
@@ -88,9 +85,9 @@
              <?php
          endif;
          ?>
-     </div><!-- .students-list -->
+     </div>
  
- </main><!-- #main -->
+ </main>
  
  <?php
  get_footer();

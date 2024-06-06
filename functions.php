@@ -281,3 +281,12 @@ function student_title_placeholder( $title, $post ) {
 	return $title;
 }
 add_filter( 'enter_title_here', 'student_title_placeholder', 10, 2 );
+
+/**
+ * Disable comments for the student post type
+ */
+function disable_student_comments() {
+    remove_post_type_support( 'student', 'comments' );
+    remove_post_type_support( 'student', 'trackbacks' );
+}
+add_action( 'init', 'disable_student_comments', 100 );

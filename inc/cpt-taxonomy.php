@@ -47,7 +47,7 @@ function school_theme_register_custom_post_types() {
 
     register_post_type( 'staff', $args );
 
-    // Register students CPT
+    // Register schedule CPT
     $labels = array(
         'name'               => _x( 'Schedules', 'post type general name', 'school_theme' ),
         'singular_name'      => _x( 'Schedule', 'post type singular name', 'school_theme' ),
