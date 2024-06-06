@@ -228,6 +228,20 @@ function school_theme_change_student_title_placeholder( $title ) {
     return $title;
 }
 add_filter( 'enter_title_here', 'school_theme_change_student_title_placeholder' );
+/**
+ * Change title placeholder text for the staff CPT.
+ */
+
+function school_theme_change_staff_title_placeholder( $title ) {
+    $screen = get_current_screen();
+
+    if ( 'staff' == $screen->post_type ) {
+        $title = 'Add staff name';
+    }
+
+    return $title;
+}
+add_filter( 'enter_title_here', 'school_theme_change_staff_title_placeholder' );
 
 /**
  * Implement the Custom Header feature.
@@ -255,3 +269,15 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/**
+ * Student placeholder text 
+ */
+
+function student_title_placeholder( $title, $post ) {
+	if ( 'student' === $post->post_type ) {
+		$title = 'Add student name';
+	}
+	return $title;
+}
+add_filter( 'enter_title_here', 'student_title_placeholder', 10, 2 );
