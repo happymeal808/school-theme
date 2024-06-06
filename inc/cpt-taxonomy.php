@@ -49,19 +49,20 @@ function school_theme_register_custom_post_types() {
 
     // Register students CPT
     $labels = array(
-        'name'               => _x( 'Students', 'post type general name' ),
-        'singular_name'      => _x( 'Student', 'post type singular name' ),
-        'menu_name'          => _x( 'Students', 'admin menu' ),
-        'name_admin_bar'     => _x( 'Student', 'add new on admin bar' ),
-        'add_new'            => _x( 'Add New', 'student' ),
-        'add_new_item'       => __( 'Add New Student' ),
-        'new_item'           => __( 'New Student' ),
-        'edit_item'          => __( 'Edit Student' ),
-        'view_item'          => __( 'View Student' ),
-        'all_items'          => __( 'All Students' ),
-        'search_items'       => __( 'Search Students' ),
-        'not_found'          => __( 'No students found.' ),
-        'not_found_in_trash' => __( 'No students found in Trash.' )
+        'name'               => _x( 'Schedules', 'post type general name', 'school_theme' ),
+        'singular_name'      => _x( 'Schedule', 'post type singular name', 'school_theme' ),
+        'menu_name'          => _x( 'Schedules', 'admin menu', 'school_theme' ),
+        'name_admin_bar'     => _x( 'Schedule', 'add new on admin bar', 'school_theme' ),
+        'add_new'            => _x( 'Add New', 'schedule', 'school_theme' ),
+        'add_new_item'       => __( 'Add New Schedule', 'school_theme' ),
+        'new_item'           => __( 'New Schedule', 'school_theme' ),
+        'edit_item'          => __( 'Edit Schedule', 'school_theme' ),
+        'view_item'          => __( 'View Schedule', 'school_theme' ),
+        'all_items'          => __( 'All Schedules', 'school_theme' ),
+        'search_items'       => __( 'Search Schedules', 'school_theme' ),
+        'parent_item_colon'  => __( 'Parent Schedules:', 'school_theme' ),
+        'not_found'          => __( 'No schedules found.', 'school_theme' ),
+        'not_found_in_trash' => __( 'No schedules found in Trash.', 'school_theme' )
     );
 
     $args = array(
@@ -71,18 +72,17 @@ function school_theme_register_custom_post_types() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'student' ),
+        'rewrite'            => array( 'slug' => 'schedule' ),
         'capability_type'    => 'post',
-        'has_archive'        => true,
+        'has_archive'        => false,
         'hierarchical'       => false,
         'menu_position'      => null,
-        'supports'           => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
-        'taxonomies'         => array( 'role' ),
+        'supports'           => array( 'title' ),  // Removed 'editor' support
     );
 
-    register_post_type( 'student', $args );
+    register_post_type( 'schedule', $args );
 
-    // schedule
+    // Register students CPT
 
     $labels = array(
         'name'               => _x( 'Students', 'post type general name' ),
