@@ -208,6 +208,15 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+// staff title placeholder
+function staff_title_placeholder( $title, $post ) {
+    if ( 'staff' === $post->post_type ) {
+        $title = 'Add staff name';
+    }
+    return $title;
+}
+add_filter( 'enter_title_here', 'staff_title_placeholder', 10, 2 );
+
 // remove Block editor from pages/posts
 function school_theme_post_filter( $use_block_editor, $post ) {
     // Add IDs to the array
