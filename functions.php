@@ -100,6 +100,9 @@ function school_theme_setup() {
 			'flex-height' => true,
 		)
 	);
+
+    // Add support for Wide and Full alignment in Gutenberg blocks
+    add_theme_support( 'align-wide' );
 }
 add_action( 'after_setup_theme', 'school_theme_setup' );
 
@@ -147,6 +150,25 @@ function school_theme_widgets_init() {
 add_action( 'widgets_init', 'school_theme_widgets_init' );
 
 /**
+ * Custom image field in footer
+ */
+if ( function_exists( 'acf_add_options_page' ) ) {
+    acf_add_options_page(array(
+        'page_title'    => 'Theme General Settings',
+        'menu_title'    => 'Theme Settings',
+        'menu_slug'     => 'theme-general-settings',
+        'capability'    => 'edit_posts',
+        'redirect'      => false
+    ));
+
+    acf_add_options_sub_page(array(
+        'page_title'    => 'Footer Settings',
+        'menu_title'    => 'Footer',
+        'parent_slug'   => 'theme-general-settings',
+    ));
+}
+
+/**
  * Enqueue scripts and styles.
  */
 function school_theme_scripts() {
@@ -167,7 +189,6 @@ add_action('wp_enqueue_scripts', 'school_theme_scripts');
 /**
  * Enqueue AOS.
  */
-
 function enqueue_aos_scripts() {
 	if (is_single('post')) {
 		wp_enqueue_style( 'aos-css', get_stylesheet_directory_uri().'/aos.css' );
@@ -175,6 +196,38 @@ function enqueue_aos_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_aos_scripts' );
+
+/**
+ * Register CPTs and Taxonomies.
+ */
+require get_template_directory() . '/inc/cpt-taxonomy.php';
+
+/**
+ * Remove Block editor from specific pages/posts.
+ */
+function school_theme_post_filter( $use_block_editor, $post ) {
+    $page_ids = array( 54 ); // Add page/post IDs to the array
+    if ( in_array( $post->ID, $page_ids ) ) {
+        return false;
+    } else {
+        return $use_block_editor;
+    }
+}
+add_filter( 'use_block_editor_for_post', 'school_theme_post_filter', 10, 2 );
+
+/**
+ * Change title placeholder text for the student CPT.
+ */
+function school_theme_change_student_title_placeholder( $title ) {
+    $screen = get_current_screen();
+
+    if ( 'student' == $screen->post_type ) {
+        $title = 'Add student name';
+    }
+
+    return $title;
+}
+add_filter( 'enter_title_here', 'school_theme_change_student_title_placeholder' );
 
 /**
  * Implement the Custom Header feature.
@@ -197,26 +250,8 @@ require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/customizer.php';
 
 /**
- * Register CPTs and Taxonomies.
- */
-require get_template_directory() . '/inc/cpt-taxonomy.php';
-
-/**
  * Load Jetpack compatibility file.
  */
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
-
-// remove Block editor from pages/posts
-function school_theme_post_filter( $use_block_editor, $post ) {
-    // Add IDs to the array
-    $page_ids = array( 54 );
-    if ( in_array( $post->ID, $page_ids ) ) {
-        return false;
-    } else {
-        return $use_block_editor;
-    }
-}
-
-add_filter( 'use_block_editor_for_post', 'school_theme_post_filter', 10, 2 );

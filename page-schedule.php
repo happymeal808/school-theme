@@ -1,13 +1,8 @@
 <?php
 /**
- * The template for displaying all pages
+ * Template Name: Schedule Page
  *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site may use a
- * different template.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * The template for displaying the program schedule using ACF Repeater field.
  *
  * @package School_Theme
  */
@@ -15,23 +10,39 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+<main id="primary" class="site-main">
 
-		<?php
-		while ( have_posts() ) :
-			the_post();
+    <header class="page-header">
+        <h1 class="page-title"><?php the_title(); ?></h1>
+    </header><!-- .page-header -->
 
-			get_template_part( 'template-parts/content', 'page' );
+    <div class="schedule-content">
+        <?php
+        // Check if the repeater field has rows of data
+        if ( have_rows( 'schedule' ) ) :
+            echo '<ul class="schedule-list">';
+            // Loop through the rows of data
+            while ( have_rows( 'schedule' ) ) : the_row();
+                // Get sub field values
+                $date = get_sub_field( 'date' );
+                $time = get_sub_field( 'time' );
+                $activity = get_sub_field( 'activity' );
+                ?>
+                <li class="schedule-item">
+                    <span class="schedule-date"><?php echo esc_html( $date ); ?></span>
+                    <span class="schedule-time"><?php echo esc_html( $time ); ?></span>
+                    <span class="schedule-activity"><?php echo esc_html( $activity ); ?></span>
+                </li>
+                <?php
+            endwhile;
+            echo '</ul>';
+        else :
+            echo '<p>' . esc_html__( 'No schedule found.', 'school-theme' ) . '</p>';
+        endif;
+        ?>
+    </div><!-- .schedule-content -->
 
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
-
-		endwhile; // End of the loop.
-		?>
-
-	</main><!-- #main -->
+</main><!-- #main -->
 
 <?php
 get_footer();
