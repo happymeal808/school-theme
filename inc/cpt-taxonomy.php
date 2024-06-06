@@ -38,7 +38,7 @@ function school_theme_register_custom_post_types() {
         'query_var'          => true,
         'rewrite'            => array( 'slug' => 'staff' ),
         'capability_type'    => 'post',
-        'has_archive'        => true,
+        'has_archive'        => false,
         'hierarchical'       => false,
         'menu_position'      => 5,
         'menu_icon'          => 'dashicons-businessperson',
@@ -83,6 +83,42 @@ function school_theme_register_custom_post_types() {
     );
 
     register_post_type( 'student', $args );
+
+    // schedule
+
+    $labels = array(
+        'name'               => _x( 'Schedules', 'post type general name' ),
+        'singular_name'      => _x( 'Schedule', 'post type singular name' ),
+        'menu_name'          => _x( 'Schedules', 'admin menu' ),
+        'name_admin_bar'     => _x( 'Schedule', 'add new on admin bar' ),
+        'add_new'            => _x( 'Add New', 'schedule' ),
+        'add_new_item'       => __( 'Add New Schedule' ),
+        'new_item'           => __( 'New Schedule' ),
+        'edit_item'          => __( 'Edit Schedule' ),
+        'view_item'          => __( 'View Schedule' ),
+        'all_items'          => __( 'All Schedules' ),
+        'search_items'       => __( 'Search Schedules' ),
+        'parent_item_colon'  => __( 'Parent Schedules:' ),
+        'not_found'          => __( 'No schedules found.' ),
+        'not_found_in_trash' => __( 'No schedules found in Trash.' )
+    );
+
+    $args = array(
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => array( 'slug' => 'schedule' ),
+        'capability_type'    => 'post',
+        'has_archive'        => false,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'supports'           => array( 'title' ),
+    );
+
+    register_post_type( 'schedule', $args );
 }
 add_action( 'init', 'school_theme_register_custom_post_types' );
 
