@@ -194,6 +194,20 @@ function school_theme_post_filter( $use_block_editor, $post ) {
 add_filter( 'use_block_editor_for_post', 'school_theme_post_filter', 10, 2 );
 
 /**
+ * Change title placeholder text for the student CPT.
+ */
+function school_theme_change_student_title_placeholder( $title ) {
+    $screen = get_current_screen();
+
+    if ( 'student' == $screen->post_type ) {
+        $title = 'Add student name';
+    }
+
+    return $title;
+}
+add_filter( 'enter_title_here', 'school_theme_change_student_title_placeholder' );
+
+/**
  * Implement the Custom Header feature.
  */
 require get_template_directory() . '/inc/custom-header.php';

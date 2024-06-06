@@ -95,6 +95,8 @@ function school_theme_register_custom_post_types() {
         'parent_item_colon'  => __( 'Parent Students:' ),
         'not_found'          => __( 'No students found.' ),
         'not_found_in_trash' => __( 'No students found in Trash.' ),
+        'archives'           => __( 'Student Archives' ),
+        'attributes'         => __( 'Student Attributes' ),
     );
 
     $args = array(
@@ -103,15 +105,23 @@ function school_theme_register_custom_post_types() {
         'publicly_queryable' => true,
         'show_ui'            => true,
         'show_in_menu'       => true,
-        'show_in_rest'       => true,
         'query_var'          => true,
         'rewrite'            => array( 'slug' => 'students' ),
         'capability_type'    => 'post',
-        'has_archive'        => false, // Disable archive pages for students
+        'has_archive'        => false,
         'hierarchical'       => false,
         'menu_position'      => 5,
         'menu_icon'          => 'dashicons-welcome-learn-more',
         'supports'           => array( 'title', 'editor', 'thumbnail' ),
+        'template'           => array(
+            array( 'core/paragraph', array(
+                'placeholder' => 'Add short biography...',
+            ) ),
+            array( 'core/button', array(
+                'placeholder' => 'Add portfolio link...',
+            ) ),
+        ),
+        'template_lock'      => 'all', // Lock the template
     );
 
     register_post_type( 'student', $args );
