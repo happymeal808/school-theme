@@ -128,4 +128,4 @@ function school_theme_rewrite_flush() {
     school_theme_register_taxonomies();
     flush_rewrite_rules();
 }
-add_action( 'after_switch_theme', 'school_theme_rewrite_flush' );
+add_action( 'after_switch_theme', 'school_theme_rewrite_flush' ); 
