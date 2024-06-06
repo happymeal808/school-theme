@@ -269,3 +269,15 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/**
+ * Student placeholder text 
+ */
+
+function student_title_placeholder( $title, $post ) {
+	if ( 'student' === $post->post_type ) {
+		$title = 'Add student name';
+	}
+	return $title;
+}
+add_filter( 'enter_title_here', 'student_title_placeholder', 10, 2 );
