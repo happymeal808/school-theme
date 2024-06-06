@@ -228,6 +228,20 @@ function school_theme_change_student_title_placeholder( $title ) {
     return $title;
 }
 add_filter( 'enter_title_here', 'school_theme_change_student_title_placeholder' );
+/**
+ * Change title placeholder text for the staff CPT.
+ */
+
+function school_theme_change_staff_title_placeholder( $title ) {
+    $screen = get_current_screen();
+
+    if ( 'staff' == $screen->post_type ) {
+        $title = 'Add staff name';
+    }
+
+    return $title;
+}
+add_filter( 'enter_title_here', 'school_theme_change_staff_title_placeholder' );
 
 /**
  * Implement the Custom Header feature.

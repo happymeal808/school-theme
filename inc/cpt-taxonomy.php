@@ -1,25 +1,33 @@
 <?php
-function school_theme_register_custom_post_types() {
-    
+/**
+ * Register Custom Post Types and Taxonomies
+ *
+ * @package School_Theme
+ */
 
-    // Register staff
+/**
+ * Register Custom Post Types
+ */
+function school_theme_register_custom_post_types() {
+
+    // Register Staff CPT
     $labels = array(
-        'name'               => _x( 'Staff', 'post type general name'  ),
-        'singular_name'      => _x( 'Staff', 'post type singular name'  ),
-        'menu_name'          => _x( 'Staff', 'admin menu'  ),
+        'name'               => _x( 'Staff', 'post type general name' ),
+        'singular_name'      => _x( 'Staff', 'post type singular name' ),
+        'menu_name'          => _x( 'Staff', 'admin menu' ),
         'name_admin_bar'     => _x( 'Staff', 'add new on admin bar' ),
-        'add_new'            => _x( 'Add New', 'Staff' ),
+        'add_new'            => _x( 'Add New', 'staff' ),
         'add_new_item'       => __( 'Add New Staff' ),
         'new_item'           => __( 'New Staff' ),
         'edit_item'          => __( 'Edit Staff' ),
-        'view_item'          => __( 'View Staff'  ),
+        'view_item'          => __( 'View Staff' ),
         'all_items'          => __( 'All Staff' ),
         'search_items'       => __( 'Search Staff' ),
         'parent_item_colon'  => __( 'Parent Staff:' ),
         'not_found'          => __( 'No staff found.' ),
         'not_found_in_trash' => __( 'No staff found in Trash.' ),
     );
-    
+
     $args = array(
         'labels'             => $labels,
         'public'             => true,
@@ -30,57 +38,16 @@ function school_theme_register_custom_post_types() {
         'query_var'          => true,
         'rewrite'            => array( 'slug' => 'staff' ),
         'capability_type'    => 'post',
-        'has_archive'        => false,
+        'has_archive'        => true,
         'hierarchical'       => false,
-        'menu_position'      => 7,
-        'menu_icon'          => 'dashicons-archive',
-        'supports'           => array( 'title', 'editor' ),
-        'template'           => array( array( 'core/pullquote' ) ),
-        'template_lock'      => 'all'
+        'menu_position'      => 5,
+        'menu_icon'          => 'dashicons-businessperson',
+        'supports'           => array( 'title' ),
     );
-    
-    register_post_type( 'school-theme-staff', $args );
 
-    // Register schedule
-    $labels = array(
-        'name'               => _x( 'Schedule', 'post type general name'  ),
-        'singular_name'      => _x( 'Schedule', 'post type singular name'  ),
-        'menu_name'          => _x( 'Schedule', 'admin menu'  ),
-        'name_admin_bar'     => _x( 'Schedule', 'add new on admin bar' ),
-        'add_new'            => _x( 'Add New', 'Schedule' ),
-        'add_new_item'       => __( 'Add New Schedule' ),
-        'new_item'           => __( 'New Schedule' ),
-        'edit_item'          => __( 'Edit Schedule' ),
-        'view_item'          => __( 'View Schedule'  ),
-        'all_items'          => __( 'All Schedule' ),
-        'search_items'       => __( 'Search Schedule' ),
-        'parent_item_colon'  => __( 'Parent Schedule:' ),
-        'not_found'          => __( 'No schedule found.' ),
-        'not_found_in_trash' => __( 'No schedule found in Trash.' ),
-    );
-    
-    $args = array(
-        'labels'             => $labels,
-        'public'             => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'show_in_rest'       => true,
-        'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'schedule' ),
-        'capability_type'    => 'post',
-        'has_archive'        => false,
-        'hierarchical'       => false,
-        'menu_position'      => 7,
-        'menu_icon'          => 'dashicons-clock',
-        'supports'           => array( 'title', 'editor' ),
-        'template'           => array( array( 'core/pullquote' ) ),
-        'template_lock'      => 'all'
-    );
-    
-    register_post_type( 'school-theme-schedule', $args );
-    
-    // Register students
+    register_post_type( 'staff', $args );
+
+    // Register students CPT
     $labels = array(
         'name'               => _x( 'Students', 'post type general name' ),
         'singular_name'      => _x( 'Student', 'post type singular name' ),
@@ -96,8 +63,6 @@ function school_theme_register_custom_post_types() {
         'parent_item_colon'  => __( 'Parent Students:' ),
         'not_found'          => __( 'No students found.' ),
         'not_found_in_trash' => __( 'No students found in Trash.' ),
-        'archives'           => __( 'Student Archives' ),
-        'attributes'         => __( 'Student Attributes' ),
     );
 
     $args = array(
@@ -106,28 +71,19 @@ function school_theme_register_custom_post_types() {
         'publicly_queryable' => true,
         'show_ui'            => true,
         'show_in_menu'       => true,
+        'show_in_rest'       => true,
         'query_var'          => true,
         'rewrite'            => array( 'slug' => 'students' ),
         'capability_type'    => 'post',
-        'has_archive'        => false,
+        'has_archive'        => true,
         'hierarchical'       => false,
         'menu_position'      => 5,
         'menu_icon'          => 'dashicons-welcome-learn-more',
-        'supports'           => array( 'title', 'editor', 'thumbnail' ),
-        'template'           => array(
-            array( 'core/paragraph', array(
-                'placeholder' => 'Add short biography...',
-            ) ),
-            array( 'core/button', array(
-                'placeholder' => 'Add portfolio link...',
-            ) ),
-        ),
-        'template_lock'      => 'all', // Lock the template
+        'supports'           => array( 'title' ),
     );
 
     register_post_type( 'student', $args );
 }
-
 add_action( 'init', 'school_theme_register_custom_post_types' );
 
 /**
@@ -159,7 +115,7 @@ function school_theme_register_taxonomies() {
         'show_tagcloud'              => true,
     );
 
-    register_taxonomy( 'staff-category', array( 'school-theme-staff' ), $args );
+    register_taxonomy( 'staff-category', array( 'staff' ), $args );
 
     // Register student role taxonomy
     $labels = array(
