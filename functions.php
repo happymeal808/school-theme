@@ -177,6 +177,18 @@ function enqueue_aos_scripts() {
 add_action( 'wp_enqueue_scripts', 'enqueue_aos_scripts' );
 
 /**
+ * customize student placeholder
+ */
+function student_title_placeholder( $title, $post ) {
+    if ( 'student' === $post->post_type ) {
+        $title = 'Add student name';
+    }
+    return $title;
+}
+add_filter( 'enter_title_here', 'student_title_placeholder', 10, 2 );
+
+
+/**
  * Implement the Custom Header feature.
  */
 require get_template_directory() . '/inc/custom-header.php';
