@@ -49,7 +49,8 @@ function school_theme_setup() {
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus(
 		array(
-			'menu-1' => esc_html__( 'Primary', 'school-theme' ),
+			'header' => esc_html__( 'Header Menu', 'school-theme' ),
+			'footer-right' => esc_html__( 'Footer Menu - Right Side', 'school-theme' ),
 		)
 	);
 
@@ -99,6 +100,9 @@ function school_theme_setup() {
 			'flex-height' => true,
 		)
 	);
+
+    // Add support for Wide and Full alignment in Gutenberg blocks
+    add_theme_support( 'align-wide' );
 }
 add_action( 'after_setup_theme', 'school_theme_setup' );
 
@@ -110,7 +114,7 @@ add_action( 'after_setup_theme', 'school_theme_setup' );
  * @global int $content_width
  */
 function school_theme_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'school_theme_content_width', 640 );
+	$GLOBALS['content_width'] = apply_filters( 'school_theme_content_width', 960 );
 }
 add_action( 'after_setup_theme', 'school_theme_content_width', 0 );
 
@@ -131,23 +135,113 @@ function school_theme_widgets_init() {
 			'after_title'   => '</h2>',
 		)
 	);
+	register_sidebar(
+		array(
+			'name'          => esc_html__( 'Page Sidebar', 'school-theme' ),
+			'id'            => 'sidebar-2',
+			'description'   => esc_html__( 'Add widgets here.', 'school-theme' ),
+			'before_widget' => '<section id="%1$s" class="widget %2$s">',
+			'after_widget'  => '</section>',
+			'before_title'  => '<h2 class="widget-title">',
+			'after_title'   => '</h2>',
+		)
+	);
 }
 add_action( 'widgets_init', 'school_theme_widgets_init' );
+
+/**
+ * Custom image field in footer
+ */
+if ( function_exists( 'acf_add_options_page' ) ) {
+    acf_add_options_page(array(
+        'page_title'    => 'Theme General Settings',
+        'menu_title'    => 'Theme Settings',
+        'menu_slug'     => 'theme-general-settings',
+        'capability'    => 'edit_posts',
+        'redirect'      => false
+    ));
+
+    acf_add_options_sub_page(array(
+        'page_title'    => 'Footer Settings',
+        'menu_title'    => 'Footer',
+        'parent_slug'   => 'theme-general-settings',
+    ));
+}
 
 /**
  * Enqueue scripts and styles.
  */
 function school_theme_scripts() {
-	wp_enqueue_style( 'school-theme-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'school-theme-style', 'rtl', 'replace' );
+    // Enqueue the compiled CSS file
+    wp_enqueue_style('school-theme-style', get_template_directory_uri() . '/style.css', array(), _S_VERSION);
+    wp_style_add_data('school-theme-style', 'rtl', 'replace');
 
-	wp_enqueue_script( 'school-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+    // Enqueue navigation script
+    wp_enqueue_script('school-theme-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
+    // Enqueue comment-reply script if needed
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
+}
+add_action('wp_enqueue_scripts', 'school_theme_scripts');
+
+/**
+ * Enqueue AOS.
+ */
+function enqueue_aos_scripts() {
+	if (is_single('post')) {
+		wp_enqueue_style( 'aos-css', get_stylesheet_directory_uri().'/aos.css' );
+    	wp_enqueue_script( 'aos-js', get_stylesheet_directory_uri(). '/aos.js', array(), null, true );
 	}
 }
-add_action( 'wp_enqueue_scripts', 'school_theme_scripts' );
+add_action( 'wp_enqueue_scripts', 'enqueue_aos_scripts' );
+
+/**
+ * Register CPTs and Taxonomies.
+ */
+require get_template_directory() . '/inc/cpt-taxonomy.php';
+
+/**
+ * Remove Block editor from specific pages/posts.
+ */
+function school_theme_post_filter( $use_block_editor, $post ) {
+    $page_ids = array( 54 ); // Add page/post IDs to the array
+    if ( in_array( $post->ID, $page_ids ) ) {
+        return false;
+    } else {
+        return $use_block_editor;
+    }
+}
+add_filter( 'use_block_editor_for_post', 'school_theme_post_filter', 10, 2 );
+
+/**
+ * Change title placeholder text for the student CPT.
+ */
+function school_theme_change_student_title_placeholder( $title ) {
+    $screen = get_current_screen();
+
+    if ( 'student' == $screen->post_type ) {
+        $title = 'Add student name';
+    }
+
+    return $title;
+}
+add_filter( 'enter_title_here', 'school_theme_change_student_title_placeholder' );
+/**
+ * Change title placeholder text for the staff CPT.
+ */
+
+function school_theme_change_staff_title_placeholder( $title ) {
+    $screen = get_current_screen();
+
+    if ( 'staff' == $screen->post_type ) {
+        $title = 'Add staff name';
+    }
+
+    return $title;
+}
+add_filter( 'enter_title_here', 'school_theme_change_staff_title_placeholder' );
 
 /**
  * Implement the Custom Header feature.
@@ -176,3 +270,23 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+/**
+ * Student placeholder text 
+ */
+
+function student_title_placeholder( $title, $post ) {
+	if ( 'student' === $post->post_type ) {
+		$title = 'Add student name';
+	}
+	return $title;
+}
+add_filter( 'enter_title_here', 'student_title_placeholder', 10, 2 );
+
+/**
+ * Disable comments for the student post type
+ */
+function disable_student_comments() {
+    remove_post_type_support( 'student', 'comments' );
+    remove_post_type_support( 'student', 'trackbacks' );
+}
+add_action( 'init', 'disable_student_comments', 100 );
