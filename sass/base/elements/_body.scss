@@ -1,3 +1,87 @@
 body {
 	background: $color__background-body; // Fallback for when there is no custom background color defined.
+
+	.site-main{
+		grid-area: main;
+		margin: 55px auto 0;
+		padding: 0 1rem;
+		max-width: 62.5rem;
+
+	}
+}
+
+// schedule
+.program-schedule {
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    tr:nth-child(even) {
+        background-color: #eee;
+    }
+
+    th {
+		background-color: #eee;
+        text-align: left;
+        padding: 1rem;
+    }
+
+    td {
+        padding: 1rem;
+    }
+}
+
+@media only screen and (min-width: 37.5em) {
+	.program-schedule{
+		th,
+		td {
+			display: table-cell;
+			width: 33.33%;
+			padding: 2rem;
+		}
+	}
+}
+
+// staff
+.staff-list{
+	h2{
+		text-decoration: underline;
+	}
+	.staff-wrapper {
+		margin-bottom: 3rem;
+	
+		.staff-member{
+			.staff-courses,
+			.staff-website{
+				display: flex;
+				flex-direction: row;
+				align-items: baseline;
+				gap: 0.5rem;
+			}
+
+
+		}
+	}
+}
+
+@media only screen and (min-width: 37.5em) {
+	.staff-list{
+		h2{
+			width: 100%;
+		}
+
+		.staff-wrapper {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			margin-bottom: 2rem;
+
+			.staff-member {
+				width: 48%;
+				margin: 0;
+			}
+		}
+	}
 }
