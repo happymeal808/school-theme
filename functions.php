@@ -100,6 +100,9 @@ function school_theme_setup() {
 			'flex-height' => true,
 		)
 	);
+
+    // Add support for Wide and Full alignment in Gutenberg blocks
+    add_theme_support( 'align-wide' );
 }
 add_action( 'after_setup_theme', 'school_theme_setup' );
 
@@ -114,12 +117,6 @@ function school_theme_content_width() {
 	$GLOBALS['content_width'] = apply_filters( 'school_theme_content_width', 960 );
 }
 add_action( 'after_setup_theme', 'school_theme_content_width', 0 );
-
-function school_theme_setup() {
-    // Add support for Wide and Full alignment in Gutenberg blocks
-    add_theme_support( 'align-wide' );
-}
-add_action( 'after_setup_theme', 'school_theme_setup' );
 
 /**
  * Register widget area.
@@ -153,6 +150,25 @@ function school_theme_widgets_init() {
 add_action( 'widgets_init', 'school_theme_widgets_init' );
 
 /**
+ * Custom image field in footer
+ */
+if ( function_exists( 'acf_add_options_page' ) ) {
+    acf_add_options_page(array(
+        'page_title'    => 'Theme General Settings',
+        'menu_title'    => 'Theme Settings',
+        'menu_slug'     => 'theme-general-settings',
+        'capability'    => 'edit_posts',
+        'redirect'      => false
+    ));
+
+    acf_add_options_sub_page(array(
+        'page_title'    => 'Footer Settings',
+        'menu_title'    => 'Footer',
+        'parent_slug'   => 'theme-general-settings',
+    ));
+}
+
+/**
  * Enqueue scripts and styles.
  */
 function school_theme_scripts() {
@@ -173,7 +189,6 @@ add_action('wp_enqueue_scripts', 'school_theme_scripts');
 /**
  * Enqueue AOS.
  */
-
 function enqueue_aos_scripts() {
 	if (is_single('post')) {
 		wp_enqueue_style( 'aos-css', get_stylesheet_directory_uri().'/aos.css' );
@@ -181,6 +196,7 @@ function enqueue_aos_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_aos_scripts' );
+
 /**
  * Register CPTs and Taxonomies.
  */

@@ -1,5 +1,6 @@
 <?php
 function school_theme_register_custom_post_types() {
+    
 
     // Register staff
     $labels = array(
