@@ -175,6 +175,23 @@ function enqueue_aos_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_aos_scripts' );
+/**
+ * Register CPTs and Taxonomies.
+ */
+require get_template_directory() . '/inc/cpt-taxonomy.php';
+
+/**
+ * Remove Block editor from specific pages/posts.
+ */
+function school_theme_post_filter( $use_block_editor, $post ) {
+    $page_ids = array( 54 ); // Add page/post IDs to the array
+    if ( in_array( $post->ID, $page_ids ) ) {
+        return false;
+    } else {
+        return $use_block_editor;
+    }
+}
+add_filter( 'use_block_editor_for_post', 'school_theme_post_filter', 10, 2 );
 
 /**
  * Implement the Custom Header feature.
@@ -197,26 +214,8 @@ require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/customizer.php';
 
 /**
- * Register CPTs and Taxonomies.
- */
-require get_template_directory() . '/inc/cpt-taxonomy.php';
-
-/**
  * Load Jetpack compatibility file.
  */
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
-
-// remove Block editor from pages/posts
-function school_theme_post_filter( $use_block_editor, $post ) {
-    // Add IDs to the array
-    $page_ids = array( 54 );
-    if ( in_array( $post->ID, $page_ids ) ) {
-        return false;
-    } else {
-        return $use_block_editor;
-    }
-}
-
-add_filter( 'use_block_editor_for_post', 'school_theme_post_filter', 10, 2 );
