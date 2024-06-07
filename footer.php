@@ -22,6 +22,16 @@
             } else {
                 echo '<a href="' . esc_url( home_url( '/' ) ) . '" class="custom-logo-link">' . get_bloginfo( 'name' ) . '</a>';
             }
+        } else {
+            // Fallback if ACF is not installed or the field is not set
+            $custom_logo_id = get_theme_mod( 'custom_logo' );
+            $logo = wp_get_attachment_image_src( $custom_logo_id, 'full' );
+
+            if ( has_custom_logo() ) {
+                echo '<a href="' . esc_url( home_url( '/' ) ) . '" class="custom-logo-link"><img src="' . esc_url( $logo[0] ) . '" alt="' . get_bloginfo( 'name' ) . '"></a>';
+            } else {
+                echo '<a href="' . esc_url( home_url( '/' ) ) . '" class="custom-logo-link">' . get_bloginfo( 'name' ) . '</a>';
+            }
         }
         ?>
         <a href="<?php echo esc_url( __( 'https://wordpress.org/', 'school-theme' ) ); ?>">
@@ -37,7 +47,7 @@
         ?>
     </div><!-- .site-info -->
     <nav id="footer-navigation" class="footer-navigation">
-        <?php wp_nav_menu( array( 'theme_location' => 'footer-right') ); ?>
+        <?php wp_nav_menu( array( 'theme_location' => 'footer-right' ) ); ?>
     </nav>
 </footer><!-- #colophon -->
 </div><!-- #page -->
