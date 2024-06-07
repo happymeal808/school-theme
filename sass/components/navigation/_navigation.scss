@@ -18,12 +18,11 @@
 			top: 100%;
 			left: -999em;
 			z-index: 99999;
-
 			ul {
 				left: -999em;
 				top: 0;
-			}
-
+				}
+			
 			li {
 
 				&:hover > ul,
@@ -71,16 +70,16 @@
 		font-weight: 700;
 		color: white;
 		text-transform: uppercase;
+		background-color: #000000;
+		width: 100%;
 		a:visited {
 			color: #003c71;
 		}
 	}
+}
 
-	.current_page_item > a,
-	.current-menu-item > a,
-	.current_page_ancestor > a,
-	.current-menu-ancestor > a {
-	}
+.main-navigation li.current-menu-item > a, .main-navigation li.current_page_item > a, .main-navigation li:hover > a, .main-navigation li.focus > a {
+    background-color: #305c9f;
 }
 
 /* Small menu. */
