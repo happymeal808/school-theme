@@ -112,7 +112,7 @@ function school_theme_register_custom_post_types() {
         'has_archive'        => true,
         'hierarchical'       => false,
         'menu_position'      => null,
-        'supports'           => array( 'title', 'editor' ),
+        'supports'           => array( 'title', 'editor', 'thumbnail' ),
         'template'           => array(
             array( 'core/paragraph', array(
                 'placeholder' => 'Add a short biography...',
