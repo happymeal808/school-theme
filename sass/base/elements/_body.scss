@@ -1,3 +1,232 @@
 body {
 	background: $color__background-body; // Fallback for when there is no custom background color defined.
+
+	.site-main{
+		grid-area: main;
+		margin: 55px auto 0;
+		padding: 0 1rem;
+		max-width: 62.5rem;
+
+	}
+}
+
+// Home
+.home-blog {
+    margin: 1.5em 0 0;
+
+    h2 {
+        font-size: 1.5em;
+    }
+    a{
+        margin: 0 .5em 1em;
+    }
+    .recent-posts {
+        .recent-post{
+            a{
+                position: relative;
+                display: block;
+                margin: 0 auto 1em;
+                max-width: 300px;
+                h3{
+                    position:absolute;
+                    left: 0;
+                    bottom: 0;
+                    z-index: 1;
+                    width: 100%;
+                    margin: 0;
+                    padding: 1em;
+                    font-size: 1em;
+                    text-align: center;
+                    background: rgba(255, 255, 255, .8);
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 50rem) {
+    .home-blog {
+        .recent-posts{
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            .recent-post{
+                max-width: 300px;
+            }
+        }
+        
+    }    
+}
+
+// schedule
+.program-schedule {
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    tr:nth-child(even) {
+        background-color: #eee;
+    }
+
+    th {
+		background-color: #eee;
+        text-align: left;
+        padding: 1rem;
+    }
+
+    td {
+        padding: 1rem;
+    }
+}
+
+@media only screen and (min-width: 37.5em) {
+	.program-schedule{
+		th,
+		td {
+			display: table-cell;
+			width: 33.33%;
+			padding: 2rem;
+		}
+	}
+}
+
+// staff
+.staff-list{
+	h2{
+		text-decoration: underline;
+	}
+	.staff-wrapper {
+		margin-bottom: 3rem;
+	
+		.staff-member{
+			.staff-courses,
+			.staff-website{
+				display: flex;
+				flex-direction: row;
+				align-items: baseline;
+				gap: 0.5rem;
+			}
+
+
+		}
+	}
+}
+
+@media only screen and (min-width: 37.5em) {
+	.staff-list{
+		h2{
+			width: 100%;
+		}
+
+		.staff-wrapper {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			margin-bottom: 2rem;
+
+			.staff-member {
+				width: 48%;
+				margin: 0;
+			}
+		}
+	}
+}
+
+// News
+
+.type-post{
+	padding-bottom: 1rem;
+	a{
+		text-decoration: none;
+		font-weight: 700;
+	}
+	h2{
+		font-size: 1.5rem;
+	}
+
+	.entry-footer{
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+
+@media only screen and (min-width: 37.5em) {
+	.type-post{
+		padding-bottom: 2rem;
+		h2{
+			font-size: 2rem;
+		}
+	
+		.entry-footer{
+			flex-direction: row;
+			gap: 3rem;
+		}
+	
+	}
+}
+
+// sidebar
+.widget-area{
+	grid-area: sidebar;
+	margin: 0 1rem;
+	.wp-block-search__label{
+		position: fixed;
+		left: -100;
+	}
+	.wp-block-search__inside-wrapper {
+	
+			display: flex;
+			flex-direction: column;
+			.wp-block-search__input{
+				width: 100%;
+				border-radius: 0;
+				padding: 0.5rem;
+			}
+			.wp-block-search__button{
+				width: 100%;
+				margin: 0;
+				background-color: #315C9F;
+				color: #eee;
+				font-weight: 500;
+				text-align: center;
+				padding: 1rem;
+				border-radius: 0;
+			}
+		
+
+	}
+
+	.widget_calendar {
+		margin: 0 0 1.5em;
+		width: 100%;
+	}
+
+	ul{
+		padding: 0 1rem;
+		margin-left: 2rem;	
+		li{
+			list-style:square;
+			a{
+				text-decoration: none;
+				font-weight: 700;
+				font-size: 0.875rem;
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 48rem) {
+    .widget-area {
+        display: flex;
+        justify-content: space-between;
+		max-width: 62.5rem;
+		margin: 0 auto;
+
+		.widget{
+			width: 20%;
+		}
+    }
 }
