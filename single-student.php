@@ -21,7 +21,7 @@ get_header();
         // Get the featured image
         $featured_image = get_the_post_thumbnail_url();
         // Get the terms of the taxonomy that are attached to the post
-        $taxonomy = 'student type';
+        $taxonomy = 'role';
         $terms = wp_get_post_terms( get_the_ID(), $taxonomy );
         ?>
 

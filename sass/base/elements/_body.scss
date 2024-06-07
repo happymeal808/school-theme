@@ -230,3 +230,30 @@ body {
 		}
     }
 }
+
+// single student
+
+@media only screen and (min-width: 48rem) {
+	.site-main{
+		.student-profile{
+			.student-image{
+				float: left;
+				height: 30rem;
+			}
+		}
+	}
+}
+
+// students 
+@media only screen and (min-width: 48rem) {
+	.site-main{
+		.students-list{
+			display: flex;
+			flex-wrap: wrap;
+			flex-direction: row;
+			.student-item{
+				max-width: 30%;
+			}
+		}
+	}
+}
