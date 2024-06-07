@@ -7,7 +7,8 @@
     padding: 2rem 0;
     border-top: 3px solid #305c9f;
     position:fixed;
-    top: 52px;
+    z-index: 1000;
+    top: 0;
     .site-title {
         font-size: 1.3em;
         text-transform: uppercase;
