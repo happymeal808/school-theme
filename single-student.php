@@ -76,7 +76,7 @@ get_header();
                 </div>
             <?php endif; ?>
         </div>
-    <?ph
+    <?php
     endwhile;
     ?>
 
